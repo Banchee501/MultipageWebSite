@@ -26,13 +26,13 @@ export default class MiniSlider extends Slider {
 
     nextSlide() {
         if (this.slides[1].tagName == "BUTTON" && this.slides[2].tagName == "BUTTON") {
-            this.container.appendChild(this.slides[0]); // Slide
-            this.container.appendChild(this.slides[1]); // Btn
-            this.container.appendChild(this.slides[2]); // Btn
+            this.container.appendChild(this.slides[0]);
+            this.container.appendChild(this.slides[1]);
+            this.container.appendChild(this.slides[2]);
             this.decorizeSlides();
         } else if (this.slides[1].tagName == "BUTTON") {
-            this.container.appendChild(this.slides[0]); // Slide
-            this.container.appendChild(this.slides[1]); // Btn
+            this.container.appendChild(this.slides[0]);
+            this.container.appendChild(this.slides[1]);
             this.decorizeSlides();
         } else {
             this.container.appendChild(this.slides[0]);
