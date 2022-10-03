@@ -23,13 +23,12 @@ export default class VideoPlayer {
                     if (document.querySelector('iframe#frame')) {
                         this.overlay.style.display = 'flex';
                         if (this.path !== btn.getAttribute('data-url')) {
-                            debugger;
-                            this.path = btn.getAttribute('data-url'); debugger;
-                            this.player.loadVideoById({ videoId: this.path }); debugger;
+                            this.path = btn.getAttribute('data-url');
+                            this.player.loadVideoById({ videoId: this.path });
                         }
                     } else {
-                        this.path = btn.getAttribute('data-url'); debugger;
-                        this.createPlayer(this.path); debugger;
+                        this.path = btn.getAttribute('data-url');
+                        this.createPlayer(this.path);
 
                         // this.createPlayer('dQw4w9WgXcQ');
                     }
