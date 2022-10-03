@@ -2295,6 +2295,11 @@ window.addEventListener('DOMContentLoaded', () => {
     container: '.page'
   });
   slider.render();
+  const modulePageSlider = new _modules_slider_slider_main__WEBPACK_IMPORTED_MODULE_0__["default"]({
+    container: '.moduleapp',
+    btns: '.next'
+  });
+  modulePageSlider.render();
   const showUpSlider = new _modules_slider_slider_mini__WEBPACK_IMPORTED_MODULE_1__["default"]({
     container: '.showup__content-slider',
     prev: '.showup__prev',
@@ -2319,8 +2324,8 @@ window.addEventListener('DOMContentLoaded', () => {
     activeClass: 'feed__item-active'
   });
   feedSlider.init();
-  const player = new _modules_playVideo__WEBPACK_IMPORTED_MODULE_2__["default"]('.showup .play', '.overlay');
-  player.init();
+  new _modules_playVideo__WEBPACK_IMPORTED_MODULE_2__["default"]('.showup .play', '.overlay').init();
+  new _modules_playVideo__WEBPACK_IMPORTED_MODULE_2__["default"]('.module__video-item', '.overlay').init();
   new _modules_difference__WEBPACK_IMPORTED_MODULE_3__["default"]('.officerold', '.officernew', '.officer__card-item').init();
   new _modules_form__WEBPACK_IMPORTED_MODULE_4__["default"]('.form').init();
 });
@@ -2606,7 +2611,7 @@ class MainSlider extends _slider__WEBPACK_IMPORTED_MODULE_1__["default"] {
     try {
       this.hanson.style.opacity = '0';
 
-      if (n === 3) {
+      if (n == 3) {
         this.hanson.classList.add('animated');
         setTimeout(() => {
           this.hanson.style.opacity = '1';
@@ -2627,24 +2632,42 @@ class MainSlider extends _slider__WEBPACK_IMPORTED_MODULE_1__["default"] {
     this.showSlides(this.slideIndex += n);
   }
 
+  bindTriggers() {
+    this.btns.forEach(item => {
+      item.addEventListener('click', () => {
+        this.plusSlides(1);
+      });
+      item.parentNode.previousElementSibling.addEventListener('click', e => {
+        e.preventDefault();
+        this.slideIndex = 1;
+        this.showSlides(this.slideIndex);
+      });
+    });
+    document.querySelectorAll('.prevmodule').forEach(item => {
+      item.addEventListener('click', e => {
+        e.stopPropagation();
+        e.preventDefault();
+        this.plusSlides(-1);
+      });
+    });
+    document.querySelectorAll('.nextmodule').forEach(item => {
+      item.addEventListener('click', e => {
+        e.stopPropagation();
+        e.preventDefault();
+        this.plusSlides(1);
+      });
+    });
+  }
+
   render() {
-    try {
+    if (this.container) {
       try {
         this.hanson = document.querySelector('.hanson');
       } catch (e) {}
 
-      this.btns.forEach(item => {
-        item.addEventListener('click', () => {
-          this.plusSlides(1);
-        });
-        item.parentNode.previousElementSibling.addEventListener('click', e => {
-          e.preventDefault();
-          this.slideIndex = 1;
-          this.showSlides(this.slideIndex);
-        });
-      });
       this.showSlides(this.slideIndex);
-    } catch (e) {}
+      this.bindTriggers();
+    }
   }
 
 }
@@ -2693,13 +2716,18 @@ class MiniSlider extends _slider__WEBPACK_IMPORTED_MODULE_1__["default"] {
 
   nextSlide() {
     if (this.slides[1].tagName == "BUTTON" && this.slides[2].tagName == "BUTTON") {
-      this.container.appendChild(this.slides[0]);
-      this.container.appendChild(this.slides[1]);
-      this.container.appendChild(this.slides[2]);
+      this.container.appendChild(this.slides[0]); // Slide
+
+      this.container.appendChild(this.slides[1]); // Btn
+
+      this.container.appendChild(this.slides[2]); // Btn
+
       this.decorizeSlides();
     } else if (this.slides[1].tagName == "BUTTON") {
-      this.container.appendChild(this.slides[0]);
-      this.container.appendChild(this.slides[1]);
+      this.container.appendChild(this.slides[0]); // Slide
+
+      this.container.appendChild(this.slides[1]); // Btn
+
       this.decorizeSlides();
     } else {
       this.container.appendChild(this.slides[0]);
@@ -2728,7 +2756,7 @@ class MiniSlider extends _slider__WEBPACK_IMPORTED_MODULE_1__["default"] {
             flex-wrap: wrap;
             overflow: hidden;
             align-items: flex-start;
-        `;
+            `;
       this.bindTriggers();
       this.decorizeSlides();
 
